@@ -1,11 +1,24 @@
 @extends('layouts.app') 
-@section('title','tasks') 
+@section('title','Create new task')
+
+@section('styles')
+<script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+@endsection 
+
 @section('content')
 <div class="row">
 
   <div class="col">
     
-    <h2>Create task</h2><br  />
+      <div class="d-flex justify-content-between">
+        <div>
+          <h2>Create task</h2>
+        </div>
+        <div>
+          <a href="{{route('tasks.index')}}" class='btn btn-lg btn-warning'>Go back</a>
+        </div>
+      </div>
+      <br>
       @if ($errors->any())
       <div class="alert alert-danger">
           <ul>

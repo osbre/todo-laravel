@@ -9,9 +9,10 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     @auth()
-    <script src="//cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">  
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
     @endauth
-
+    @yield('styles')
 </head>
 
 <body>
@@ -20,7 +21,7 @@
     <div id='app' class='container'>
         @yield('content')
     </div>
-    <script src="{{asset('js/zepto.min.js')}}"></script>
+    @yield('scripts')    
 </body>
 
 </html>

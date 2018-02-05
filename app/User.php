@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Task;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 

@@ -17,7 +17,7 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->integer('status_id')->default(1);
+            $table->boolean('complete')->default(false);
             $table->integer('user_id');
             $table->timestamps();
         });

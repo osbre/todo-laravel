@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('tasks.index');
+        $tasks = Task::where('user_id', Auth::id())->latest()->paginate(10);
+        return view('tasks.index')->with('tasks', $tasks);
     }
 
     /**
@@ -59,7 +61,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('tasks.show')->with('task', $task);
     }
 
     /**
@@ -70,29 +72,60 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit')->with('task', $task);
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param integer $id
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
-    {
-        //
+    public function update($id, Request $request)
+    {    
+        $task = new Task;
+        $data = $this->validate(request(), [
+          'name'        => 'required|max:150;',
+          'description' => ''
+        ]);
+
+        $data['id'] = $id;
+        $task->updateTask($data);
+    
+        return back()->with('success', 'task has been updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Task  $task
+     * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+
+        return redirect('/tasks')->with('success', 'Task has been deleted!!');
+    }
+        
+    /**
+     * complete the task
+     *
+     * @param  integer $id
+     * @return \Illuminate\Http\Response
+     */
+    public function complete($id)
+    {
+        $task = Task::find($id);
+        if(!$task->complete){
+            $task->complete = true;
+        }else{
+            $task->complete = false;            
+        }
+        $task->save();
+
+        return redirect('/tasks')->with('success', 'Task has been completed!');
     }
 }

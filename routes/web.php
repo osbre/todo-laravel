@@ -17,4 +17,5 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::patch('tasks/{id}/complete','TaskController@complete')->name('tasks.complete')->middleware('auth');;
 Route::resource('tasks', 'TaskController')->middleware('auth');
