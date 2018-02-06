@@ -21,7 +21,8 @@
     <div id='app' class='container'>
         @yield('content')
     </div>
-    @yield('scripts')    
+    @yield('scripts')  
+    <script src="{{asset('js/bootstrap-native-v4.min.js')}}"></script>  
 </body>
 
 </html>
