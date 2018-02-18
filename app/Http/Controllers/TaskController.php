@@ -61,7 +61,9 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return view('tasks.show')->with('task', $task);
+        if($task->user_id == Auth::id()){
+            return view('tasks.show')->with('task', $task);
+        }
     }
 
     /**
@@ -72,7 +74,9 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('tasks.edit')->with('task', $task);
+        if($task->user_id == Auth::id()){
+            return view('tasks.edit')->with('task', $task);
+        }
     }
 
     /**
@@ -85,15 +89,17 @@ class TaskController extends Controller
     public function update($id, Request $request)
     {    
         $task = new Task;
-        $data = $this->validate(request(), [
-          'name'        => 'required|max:150;',
-          'description' => ''
-        ]);
+        if($task->user_id == Auth::id()){
+            $data = $this->validate(request(), [
+            'name'        => 'required|max:150;',
+            'description' => ''
+            ]);
 
-        $data['id'] = $id;
-        $task->updateTask($data);
-    
-        return back()->with('success', 'task has been updated');
+            $data['id'] = $id;
+        
+            $task->updateTask($data);
+            return back()->with('success', 'task has been updated');
+        }        
     }
 
     /**
@@ -105,9 +111,11 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Task::find($id);
-        $task->delete();
+        if($task->user_id == Auth::id()){
+            $task->delete();
 
-        return redirect('/tasks')->with('success', 'Task has been deleted!!');
+            return redirect('/tasks')->with('success', 'Task has been deleted!!');
+        }
     }
         
     /**
@@ -119,13 +127,15 @@ class TaskController extends Controller
     public function complete($id)
     {
         $task = Task::find($id);
-        if(!$task->complete){
-            $task->complete = true;
-        }else{
-            $task->complete = false;            
-        }
-        $task->save();
+        if($task->user_id == Auth::id()){
+            if(!$task->complete){
+                $task->complete = true;
+            }else{
+                $task->complete = false;            
+            }
+            $task->save();
 
-        return redirect('/tasks')->with('success', 'Task has been completed!');
+            return redirect('/tasks')->with('success', 'Task has been completed!');
+        }
     }
 }
