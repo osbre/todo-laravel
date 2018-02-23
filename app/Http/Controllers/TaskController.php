@@ -6,6 +6,7 @@ use App\Task;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdateUserTask;
 
 class TaskController extends Controller
 {
@@ -86,20 +87,13 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update($id, UpdateUserTask $request)
     {    
-        $task = new Task;
-        if($task->user_id == Auth::id()){
-            $data = $this->validate(request(), [
-            'name'        => 'required|max:150;',
-            'description' => ''
-            ]);
-
-            $data['id'] = $id;
-        
-            $task->updateTask($data);
-            return back()->with('success', 'task has been updated');
-        }        
+        $task = Task::findOrFail($id);
+        if($request->user_id == Auth::id()){
+            $task->update($request->all());
+        }
+        return back()->with('success', 'task has been updated');
     }
 
     /**
