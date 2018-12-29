@@ -3,10 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-
-class UpdateUserTask extends FormRequest
+class TaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +24,7 @@ class UpdateUserTask extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|max:150;',
-            'description' => '',
+            'name' => 'required|max:150',
         ];
     }
 }

@@ -2,15 +2,15 @@
     <a class="navbar-brand" href="{{ Auth::user() ? '/tasks' : '/' }}">
         Todolist app
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01"
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
         aria-expanded="false" aria-label="Toggle navigation" style="">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
+    <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
         </ul>
-        <ul class="navbar-nav  my-2 my-lg-0">
+        <ul class="navbar-nav my-2 my-lg-0">
             @auth 
             <li class="nav-item">
                 <span class="navbar-text">
@@ -25,8 +25,7 @@
             <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
-            @endauth 
-            @guest
+            @else
             <li class="nav-item active">
                 <a class="nav-link" href="{{route('login')}}">Login
                     <span class="sr-only">(current)</span>
@@ -37,7 +36,7 @@
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
-            @endguest
+            @endauth
         </ul>
     </div>
 </nav>
