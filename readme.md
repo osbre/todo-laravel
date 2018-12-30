@@ -49,7 +49,7 @@ Then go to `http://localhost:8000` from your browser and see the app.
 
 # Demo
 
-http://todo-laravel5.herokuapp.com/
+http://todo-laravel5.herokuapp.com (TODO - deploy new changes)
 
 # Screenshots:
 
